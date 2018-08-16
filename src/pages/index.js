@@ -1,6 +1,5 @@
 import React from 'react';
 import { css } from 'react-emotion';
-import Link from 'gatsby-link';
 import firebase from 'firebase';
 import { Container, Title, Button, Notification } from 'bloomer';
 import ReactChartkick, { LineChart } from 'react-chartkick';
@@ -27,7 +26,7 @@ class IndexPage extends React.Component {
     error: null
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ isLoading: true });
     // Initialize Firebase
     const config = {
@@ -42,7 +41,6 @@ class IndexPage extends React.Component {
       .auth()
       .getRedirectResult()
       .then(result => {
-        console.log('GitHub redirect result', result);
         const { credential, additionalUserInfo } = result;
         if (credential) {
           const { accessToken } = credential;
@@ -53,7 +51,6 @@ class IndexPage extends React.Component {
 
           this.fetchRepoTraffic()
             .then(data => {
-              console.log('Done fetchRepoTraffic', data);
               this.setState({ isLoading: false, graphData: data });
             })
             .catch(error => {
@@ -82,7 +79,7 @@ class IndexPage extends React.Component {
       });
   }
 
-  fetchRepoTraffic = async () => {
+  fetchRepoTraffic = () => {
     const { username, token } = this.state;
 
     const options = {
@@ -90,18 +87,19 @@ class IndexPage extends React.Component {
       token
     };
 
-    // Get all repos of the user
-    const reposRes = await fetch(`${GITHUB_API_URL}/users/${username}/repos`);
-    const repos = await reposRes.json();
+    return fetch(`${GITHUB_API_URL}/users/${username}/repos`)
+      .then(res => res.json())
+      .then(repos => {
+        const repoNames = repos
+          .filter(repo => !repo.fork)
+          .map(repo => `${username}/${repo.name}`);
 
-    // Filter all forks and map to repository names only
-    const repoNames = repos
-      .filter(repo => !repo.fork)
-      .map(repo => `${username}/${repo.name}`);
-
-    return Promise.all(
-      repoNames.map(name => this.fetchGithubTrafficViews(name, { ...options }))
-    );
+        return Promise.all(
+          repoNames.map(name =>
+            this.fetchGithubTrafficViews(name, { ...options })
+          )
+        );
+      });
   };
 
   signIn = () => {
@@ -116,7 +114,6 @@ class IndexPage extends React.Component {
       .auth()
       .signOut()
       .then(() => {
-        console.log('User successfully logged out');
         this.setState({
           token: null
         });
@@ -166,10 +163,9 @@ class IndexPage extends React.Component {
       </Button>
       {graphData.map(data => {
         return (
-          <Container style={{ margin: 20 }}>
+          <Container style={{ margin: 20 }} key={data.name}>
             <Title isSize={2}>{data.name}</Title>
             <LineChart
-              key={data.name}
               colors={['#FC1A20', '#333333']}
               curve={false}
               legend="bottom"
