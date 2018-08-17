@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
-import { Paper } from 'react-md'
 
 import Header from '../components/Header'
 import './layout.scss'
@@ -24,20 +23,23 @@ const Layout = ({ children }) => (
         <Helmet
           title={data.site.siteMetadata.title}
           meta={[
-            { name: 'description', content: 'Sample' },
-            { name: 'keywords', content: 'sample, something' },
+            {
+              name: 'description',
+              content:
+                'A website which shows a list of traffic graphs of your own GitHub repositories.',
+            },
+            { name: 'keywords', content: 'website, github, traffic, viewer' },
           ]}
         >
           <html lang="en" />
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+            type="text/css"
+          />
         </Helmet>
         <Header siteTitle={data.site.siteMetadata.title} />
-        <Paper
-          style={{ margin: 25, padding: 25, alignContent: 'center' }}
-          zDepth={2}
-          raiseOnHover={2 === 0}
-        >
-          {children}
-        </Paper>
+        {children}
       </>
     )}
   />

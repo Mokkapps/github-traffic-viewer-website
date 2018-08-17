@@ -1,7 +1,6 @@
 {
   "name": "github-traffic-website",
   "description": "Website to show traffic graphs for own repositories",
-  "version": "0.1.0",
   "author": "Michael Hoffmann <kontakt@mokkapps.de>",
   "dependencies": {
     "chart.js": "^2.7.2",

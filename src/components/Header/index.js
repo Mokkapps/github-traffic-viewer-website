@@ -8,10 +8,16 @@ const Header = () => (
   <Toolbar
     colored
     nav={
-      <Avatar src="https://avatars0.githubusercontent.com/u/3127210?s=460&v=4" />
+      <a href="https://www.mokkapps.de">
+        <Avatar src="https://avatars0.githubusercontent.com/u/3127210?s=460&v=4" />
+      </a>
     }
     title="GitHub Traffic Viewer"
-    actions={<Button icon href={GITHUB_URL} iconClassName="fa fa-github" />}
+    actions={
+      <Button flat secondary href={GITHUB_URL} iconClassName="fa fa-github">
+        GitHub
+      </Button>
+    }
   />
 )
 

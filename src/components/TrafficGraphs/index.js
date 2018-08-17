@@ -2,6 +2,8 @@ import React from 'react'
 import ReactChartkick, { LineChart } from 'react-chartkick'
 import Chart from 'chart.js'
 
+import ContentPaper from '../ContentPaper'
+
 ReactChartkick.addAdapter(Chart)
 
 const mapToGraph = data => {
@@ -24,7 +26,7 @@ const TrafficGraphs = ({ graphData }) => (
   <div>
     {graphData.map(data => {
       return (
-        <div key={data.name}>
+        <ContentPaper key={data.name}>
           <h2>{data.name}</h2>
           <LineChart
             colors={['#FC1A20', '#333333']}
@@ -32,7 +34,7 @@ const TrafficGraphs = ({ graphData }) => (
             legend="bottom"
             data={mapToGraph(data.views)}
           />
-        </div>
+        </ContentPaper>
       )
     })}
   </div>
