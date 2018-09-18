@@ -3,6 +3,7 @@ import ReactChartkick, { LineChart } from 'react-chartkick'
 import Chart from 'chart.js'
 
 import ContentPaper from '../ContentPaper'
+import './styles.scss'
 
 ReactChartkick.addAdapter(Chart)
 
@@ -21,13 +22,28 @@ const mapToGraph = data => {
     { name: 'Unique visitors', data: uniquesData },
   ]
 }
-
 const TrafficGraphs = ({ graphData }) => (
   <div>
     {graphData.map(data => {
       return (
         <ContentPaper key={data.name}>
-          <h2>{data.name}</h2>
+          <h2 className="repo-name">{data.name}</h2>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '50% 50%',
+              marginBottom: '2rem',
+            }}
+          >
+            <div className="view-container">
+              <strong className="view-number">{data.count}</strong>
+              <span className="view-text">views</span>
+            </div>
+            <div className="view-container">
+              <strong className="view-number">{data.uniques}</strong>
+              <span className="view-text">unique visitors</span>
+            </div>
+          </div>
           <LineChart
             colors={['#FC1A20', '#333333']}
             curve={false}

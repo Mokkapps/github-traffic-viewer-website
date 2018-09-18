@@ -7,7 +7,18 @@ html {
 }
 
 body {
+  height: 100%;
   margin: 0;
+}
+
+main {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.layout-content {
+  flex-grow: 1;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700|Material+Icons');

@@ -1,6 +1,17 @@
+@import '~react-md/src/scss/react-md';
+
 div .mobile-fix {
   @media (max-width: 360px - 1px) {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+a {
+  color: $md-deep-orange-a-400;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 }

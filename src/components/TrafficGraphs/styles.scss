@@ -1,0 +1,31 @@
+.repo-name {
+  font-size: 2em;
+  word-wrap: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+  }
+}
+
+.view-container {
+  border: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.view-number {
+  font-size: 2em;
+
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+  }
+}
+
+.view-text {
+  font-size: 1.5em;
+
+  @media (max-width: 768px) {
+    font-size: 1em;
+  }
+}

@@ -83,9 +83,9 @@ class IndexPage extends React.Component {
             <h1>Loading...</h1>
           </ContentPaper>
         ) : graphData ? (
-          <div style={{ textAlign: 'center', margin: 20 }}>
+          <div style={{ textAlign: 'center' }}>
             <Button
-              style={{ width: 400, height: 50 }}
+              style={{ width: '100%', marginTop: 10, height: 50 }}
               secondary
               onClick={this.onSignOut}
               raised

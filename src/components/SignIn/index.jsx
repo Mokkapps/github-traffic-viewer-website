@@ -3,7 +3,7 @@ import { Button } from 'react-md'
 
 const SignIn = ({ onSignIn }) => (
   <div>
-    <Button primary onClick={() => onSignIn()} raised>
+    <Button style={{height: '100%'}} primary onClick={() => onSignIn()} raised>
       Sign in to your GitHub account
     </Button>
     <p style={{ marginTop: 20 }}>
