@@ -39,11 +39,11 @@ const Layout = ({ children }) => (
             type="text/css"
           />
         </Helmet>
-        <main>
+        <div className="layout-container">
           <Header siteTitle={data.site.siteMetadata.title} />
           <div className="layout-content">{children}</div>
           <Footer />
-        </main>
+        </div>
       </>
     )}
   />
