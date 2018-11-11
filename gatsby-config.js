@@ -18,5 +18,11 @@ module.exports = {
     },
     'gatsby-plugin-offline',
     'gatsby-plugin-sass',
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID
+      }
+    },
   ],
 }

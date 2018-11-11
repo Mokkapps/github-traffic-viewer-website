@@ -3,7 +3,7 @@ import { Paper } from 'react-md'
 
 const ErrorPaper = ({ children }) => (
   <Paper
-    style={{ margin: 25, padding: 25, backgroundColor: 'red', color: 'white' }}
+    style={{ padding: 25, backgroundColor: 'red', color: 'white' }}
     zDepth={2}
     raiseOnHover={2 === 0}
   >

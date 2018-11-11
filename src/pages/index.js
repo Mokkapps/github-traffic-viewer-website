@@ -85,7 +85,7 @@ class IndexPage extends React.Component {
         ) : graphData ? (
           <div style={{ textAlign: 'center' }}>
             <Button
-              style={{ width: '100%', marginTop: 10, height: 50 }}
+              style={{ width: '100%', height: 50, marginBottom: 25 }}
               secondary
               onClick={this.onSignOut}
               raised

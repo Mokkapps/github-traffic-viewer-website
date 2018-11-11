@@ -26,7 +26,7 @@ const TrafficGraphs = ({ graphData }) => (
   <div>
     {graphData.map(data => {
       return (
-        <ContentPaper key={data.name}>
+        <ContentPaper key={data.name} style={{marginBottom: 25}}>
           <h2 className="repo-name">{data.name}</h2>
           <div
             style={{

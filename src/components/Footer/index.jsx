@@ -8,7 +8,8 @@ export default () => (
       <a href="https://github.com/Mokkapps/github-traffic-viewer-website">
         Built
       </a>{' '}
-      with &hearts; by <a href="https://www.mokkapps.de">Mokkapps</a>
+      with &hearts; by <a href="https://www.mokkapps.de">Mokkapps</a> |{' '}
+      <a href="/privacy-policy">Privacy Policy</a>
     </div>
   </footer>
 )

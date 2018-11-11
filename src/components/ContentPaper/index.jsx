@@ -1,9 +1,9 @@
 import React from 'react'
 import { Paper } from 'react-md'
 
-const ContentPaper = ({ children }) => (
+const ContentPaper = ({ children, style }) => (
   <Paper
-    style={{ margin: 25, padding: 25, textAlign: 'center' }}
+    style={{ padding: 25, textAlign: 'center', ...style }}
     zDepth={2}
     raiseOnHover={2 === 0}
   >
