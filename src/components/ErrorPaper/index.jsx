@@ -1,5 +1,6 @@
-import React from 'react'
-import { Paper } from 'react-md'
+import React from 'react';
+import { Paper } from 'react-md';
+import PropTypes from 'prop-types';
 
 const ErrorPaper = ({ children }) => (
   <Paper
@@ -9,6 +10,10 @@ const ErrorPaper = ({ children }) => (
   >
     {children}
   </Paper>
-)
+);
 
-export default ErrorPaper
+ErrorPaper.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default ErrorPaper;

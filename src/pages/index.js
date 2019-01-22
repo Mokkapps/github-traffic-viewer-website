@@ -1,79 +1,75 @@
-import React from 'react'
-import { Button, CircularProgress } from 'react-md'
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import { Button, CircularProgress } from 'react-md';
 
-import Layout from '../layouts/layout'
-import TrafficGraphs from '../components/TrafficGraphs'
-import ContentPaper from '../components/ContentPaper'
-import ErrorPaper from '../components/ErrorPaper'
-import SignIn from '../components/SignIn'
+import Layout from '../layouts/layout';
+import TrafficGraphs from '../components/TrafficGraphs';
+import ContentPaper from '../components/ContentPaper';
+import ErrorPaper from '../components/ErrorPaper';
+import SignIn from '../components/SignIn';
 import {
   initFirebase,
   getFirebaseRedirectResult,
   signInWithRedirect,
   signOut,
-} from '../firebase'
+} from '../firebase';
 
 class IndexPage extends React.Component {
   state = {
     graphData: null,
-    username: null,
     isLoading: false,
     error: null,
-  }
+  };
 
   componentDidMount() {
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: true });
 
-    initFirebase()
+    initFirebase();
 
     getFirebaseRedirectResult()
       .then(result => {
-        console.log('firebase result', result)
         if (!result) {
-          this.setState({ isLoading: false })
+          this.setState({ isLoading: false });
         } else {
-          const { graphData, username } = result
-          this.setState({ isLoading: false, graphData, username })
+          const { graphData } = result;
+          this.setState({ isLoading: false, graphData });
         }
       })
       .catch(error => {
-        console.error('signInWithRedirect error', error)
+        console.error('signInWithRedirect error', error);
         this.setState({
           graphData: null,
-          username: null,
           isLoading: false,
           error: `Error authenticating at GitHub: '${JSON.stringify(error)}'`,
-        })
-      })
+        });
+      });
   }
 
   onSignIn = () => {
-    signInWithRedirect()
-  }
+    signInWithRedirect();
+  };
 
   onSignOut = () => {
     signOut()
       .then(() => {
         this.setState({
           graphData: null,
-          username: null,
           isLoading: false,
           error: null,
-        })
+        });
       })
       .catch(error => {
-        console.error('signOut error', error)
+        console.error('signOut error', error);
         this.setState({
           graphData: null,
-          username: null,
           isLoading: false,
           error: `Error signing out from GitHub: '${JSON.stringify(error)}'`,
-        })
-      })
-  }
+        });
+      });
+  };
 
   render() {
-    const { isLoading, graphData, error } = this.state
+    const { isLoading, graphData, error } = this.state;
     return (
       <Layout>
         {error ? <ErrorPaper>{error}</ErrorPaper> : null}
@@ -100,8 +96,8 @@ class IndexPage extends React.Component {
           </ContentPaper>
         )}
       </Layout>
-    )
+    );
   }
 }
 
-export default IndexPage
+export default IndexPage;

@@ -1,5 +1,6 @@
-import React from 'react'
-import { Paper } from 'react-md'
+import React from 'react';
+import { Paper } from 'react-md';
+import PropTypes from 'prop-types';
 
 const ContentPaper = ({ children, style }) => (
   <Paper
@@ -9,6 +10,11 @@ const ContentPaper = ({ children, style }) => (
   >
     {children}
   </Paper>
-)
+);
 
-export default ContentPaper
+ContentPaper.propTypes = {
+  children: PropTypes.node.isRequired,
+  style: PropTypes.node.isRequired,
+};
+
+export default ContentPaper;

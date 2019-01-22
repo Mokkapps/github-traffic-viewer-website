@@ -1,5 +1,8 @@
-import React from 'react'
-import Layout from '../layouts/layout'
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import Layout from '../layouts/layout';
 
 const PrivacyPolicyPage = () => (
   <Layout>
@@ -264,6 +267,6 @@ const PrivacyPolicyPage = () => (
       <li>By email: kontakt@mokkapps.de</li>
     </ul>
   </Layout>
-)
+);
 
-export default PrivacyPolicyPage
+export default PrivacyPolicyPage;

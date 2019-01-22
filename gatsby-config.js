@@ -5,7 +5,7 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'gatsby-starter-default',
         short_name: 'starter',
@@ -19,10 +19,11 @@ module.exports = {
     'gatsby-plugin-offline',
     'gatsby-plugin-sass',
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
-        trackingId: process.env.GOOGLE_ANALYTICS_ID
-      }
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
     },
+    'gatsby-plugin-eslint',
   ],
-}
+};
