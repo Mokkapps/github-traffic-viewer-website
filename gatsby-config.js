@@ -16,14 +16,11 @@ module.exports = {
         icon: 'src/images/icon.png', // This path is relative to the root of the site.
       },
     },
+    'gatsby-plugin-netlify',
+    'gatsby-plugin-preload-fonts',
+    'gatsby-plugin-netlify-cache',
     'gatsby-plugin-offline',
     'gatsby-plugin-sass',
-    {
-      resolve: 'gatsby-plugin-google-analytics',
-      options: {
-        trackingId: process.env.GOOGLE_ANALYTICS_ID,
-      },
-    },
     'gatsby-plugin-eslint',
   ],
 };

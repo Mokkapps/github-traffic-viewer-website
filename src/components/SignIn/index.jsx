@@ -5,10 +5,10 @@ import { Button } from 'react-md';
 const SignIn = ({ onSignIn }) => (
   <div>
     <Button
-      style={{ height: '100%' }}
-      primary
+      style={{ height: '100%', color: 'white' }}
+      theme="primary"
+      themeType="contained"
       onClick={() => onSignIn()}
-      raised
     >
       Sign in to your GitHub account
     </Button>
@@ -20,7 +20,7 @@ const SignIn = ({ onSignIn }) => (
 );
 
 SignIn.propTypes = {
-  onSignIn: PropTypes.node.isRequired,
+  onSignIn: PropTypes.func.isRequired,
 };
 
 export default SignIn;

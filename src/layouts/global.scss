@@ -1,4 +1,4 @@
-@import '~react-md/src/scss/react-md';
+@import '~react-md/dist/react-md';
 
 div .mobile-fix {
   @media (max-width: 360px - 1px) {
@@ -8,7 +8,7 @@ div .mobile-fix {
 }
 
 a {
-  color: $md-deep-orange-a-400;
+  color: $rmd-deep-orange-a-400;
   text-decoration: none;
 
   &:hover {

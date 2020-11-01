@@ -1,15 +1,17 @@
-/* eslint-disable react/jsx-filename-extension */
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import { StaticQuery, graphql } from 'gatsby';
-
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import './layout.scss';
 import './global.scss';
 
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import { StaticQuery, graphql } from 'gatsby';
+import { Configuration } from '@react-md/layout';
+
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
 const Layout = ({ children }) => (
+  // eslint-disable-next-line react/jsx-filename-extension
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -20,8 +22,8 @@ const Layout = ({ children }) => (
         }
       }
     `}
-    render={data => (
-      <Fragment>
+    render={(data) => (
+      <>
         <Helmet
           title={data.site.siteMetadata.title}
           meta={[
@@ -36,16 +38,20 @@ const Layout = ({ children }) => (
           <html lang="en" />
           <link
             rel="stylesheet"
+            defer
+            async
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
             type="text/css"
           />
         </Helmet>
-        <div className="layout-container">
-          <Header siteTitle={data.site.siteMetadata.title} />
-          <div className="layout-content">{children}</div>
-          <Footer />
-        </div>
-      </Fragment>
+        <Configuration>
+          <div className="layout-container">
+            <Header siteTitle={data.site.siteMetadata.title} />
+            <div className="layout-content">{children}</div>
+            <Footer />
+          </div>
+        </Configuration>
+      </>
     )}
   />
 );

@@ -3,12 +3,12 @@ import ReactChartkick, { LineChart } from 'react-chartkick';
 import Chart from 'chart.js';
 import PropTypes from 'prop-types';
 
-import ContentPaper from '../ContentPaper';
+import ContentCard from '../ContentCard';
 import './styles.scss';
 
 ReactChartkick.addAdapter(Chart);
 
-const mapToGraph = data => {
+const mapToGraph = (data) => {
   const countsData = {};
   const uniquesData = {};
 
@@ -27,8 +27,8 @@ const mapToGraph = data => {
 
 const TrafficGraphs = ({ graphData }) => (
   <div>
-    {graphData.map(data => (
-      <ContentPaper key={data.name} style={{ marginBottom: 25 }}>
+    {graphData.map((data) => (
+      <ContentCard key={data.name} style={{ marginBottom: 25 }}>
         <h2 className="repo-name">{data.name}</h2>
         <div
           style={{
@@ -52,7 +52,7 @@ const TrafficGraphs = ({ graphData }) => (
           legend="bottom"
           data={mapToGraph(data.views)}
         />
-      </ContentPaper>
+      </ContentCard>
     ))}
   </div>
 );

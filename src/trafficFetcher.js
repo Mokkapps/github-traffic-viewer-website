@@ -15,6 +15,7 @@ const fetchRepoTraffic = async (username, token) => {
     new Promise((resolve, reject) => {
       traffic.views(repo, { ...options }, (err, results) => {
         if (err) {
+          // eslint-disable-next-line no-console
           console.error(err);
           reject(err);
         }

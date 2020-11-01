@@ -4,8 +4,8 @@ import { Button, CircularProgress } from 'react-md';
 
 import Layout from '../layouts/layout';
 import TrafficGraphs from '../components/TrafficGraphs';
-import ContentPaper from '../components/ContentPaper';
-import ErrorPaper from '../components/ErrorPaper';
+import ContentCard from '../components/ContentCard';
+import ErrorCard from '../components/ErrorCard';
 import SignIn from '../components/SignIn';
 import {
   initFirebase,
@@ -15,11 +15,15 @@ import {
 } from '../firebase';
 
 class IndexPage extends React.Component {
-  state = {
-    graphData: null,
-    isLoading: false,
-    error: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      graphData: null,
+      isLoading: false,
+      error: null,
+    };
+  }
 
   componentDidMount() {
     this.setState({ isLoading: true });
@@ -27,7 +31,7 @@ class IndexPage extends React.Component {
     initFirebase();
 
     getFirebaseRedirectResult()
-      .then(result => {
+      .then((result) => {
         if (!result) {
           this.setState({ isLoading: false });
         } else {
@@ -35,7 +39,8 @@ class IndexPage extends React.Component {
           this.setState({ isLoading: false, graphData });
         }
       })
-      .catch(error => {
+      .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error('signInWithRedirect error', error);
         this.setState({
           graphData: null,
@@ -58,7 +63,8 @@ class IndexPage extends React.Component {
           error: null,
         });
       })
-      .catch(error => {
+      .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error('signOut error', error);
         this.setState({
           graphData: null,
@@ -72,28 +78,28 @@ class IndexPage extends React.Component {
     const { isLoading, graphData, error } = this.state;
     return (
       <Layout>
-        {error ? <ErrorPaper>{error}</ErrorPaper> : null}
+        {error ? <ErrorCard>{error}</ErrorCard> : null}
         {isLoading ? (
-          <ContentPaper>
+          <ContentCard>
             <CircularProgress scale={2} id="LoadingIndicator" />
             <h1>Loading...</h1>
-          </ContentPaper>
+          </ContentCard>
         ) : graphData ? (
           <div style={{ textAlign: 'center' }}>
             <Button
+              theme="secondary"
+              themeType="contained"
               style={{ width: '100%', height: 50, marginBottom: 25 }}
-              secondary
               onClick={this.onSignOut}
-              raised
             >
               Sign out
             </Button>
             <TrafficGraphs graphData={graphData} />
           </div>
         ) : (
-          <ContentPaper>
+          <ContentCard>
             <SignIn onSignIn={this.onSignIn} />
-          </ContentPaper>
+          </ContentCard>
         )}
       </Layout>
     );
