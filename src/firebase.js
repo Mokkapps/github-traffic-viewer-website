@@ -1,42 +1,43 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import {
+  getAuth,
+  signInWithRedirect,
+  getRedirectResult,
+  signOut,
+  GithubAuthProvider,
+} from 'firebase/auth';
+
 import fetchRepoTraffic from './trafficFetcher';
 
-export const initFirebase = () => {
-  const config = {
-    apiKey: 'AIzaSyAYbPIy_MkmD3kWzobkKe1gyQL92lXJMTU',
-    authDomain: 'github-traffic-website-545f4.firebaseapp.com',
-    projectId: 'github-traffic-website-545f4',
-  };
-  firebase.initializeApp(config);
-};
+const auth = getAuth();
+const provider = new GithubAuthProvider();
+provider.addScope('repo');
 
-export const signInWithRedirect = () => {
-  const provider = new firebase.auth.GithubAuthProvider();
-  provider.addScope('repo');
-  firebase.auth().signInWithRedirect(provider);
-};
+export const firebaseSignIn = () => signInWithRedirect(auth, provider);
 
-export const signOut = async () => firebase.auth().signOut();
+export const firebaseSignOut = async () => signOut();
 
 export const getFirebaseRedirectResult = async () =>
   new Promise((resolve, reject) => {
-    firebase
-      .auth()
-      .getRedirectResult()
-      .then(result => {
-        const { credential, additionalUserInfo } = result;
+    getRedirectResult(auth)
+      .then((result) => {
+        const credential = GithubAuthProvider.credentialFromResult(result);
+
         if (!credential) {
           resolve();
         }
-        const { accessToken } = credential;
-        const { username } = additionalUserInfo;
 
-        fetchRepoTraffic(username, accessToken)
-          .then(trafficData => {
-            resolve({ graphData: trafficData, username });
-          })
-          .catch(error => reject(error));
+        if (credential) {
+          const token = credential.accessToken;
+          const user = result.user;
+
+          const username = user.reloadUserInfo.screenName;
+
+          fetchRepoTraffic(username, token)
+            .then((trafficData) => {
+              resolve({ graphData: trafficData, username });
+            })
+            .catch((error) => reject(error));
+        }
       })
-      .catch(error => reject(error));
+      .catch((error) => reject(error));
   });

@@ -1,6 +1,3 @@
-import './layout.scss';
-import './global.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
@@ -11,7 +8,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const Layout = ({ children }) => (
-  // eslint-disable-next-line react/jsx-filename-extension
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {

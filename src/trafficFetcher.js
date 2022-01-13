@@ -1,40 +1,44 @@
-const traffic = require('github-traffic');
+import base64 from 'base-64';
 
 const GITHUB_API_URL = 'https://api.github.com';
 const REPOS_PER_PAGE = 100;
 const DEFAULT_PAGE = 1;
 
 const fetchRepoTraffic = async (username, token) => {
-  const options = {
-    username,
-    token,
-  };
-
   // eslint-disable-next-line no-shadow
-  const fetchGithubTrafficViews = (repo, options) =>
+  const fetchGithubTrafficViews = (username, repoName) =>
     new Promise((resolve, reject) => {
-      traffic.views(repo, { ...options }, (err, results) => {
-        if (err) {
-          // eslint-disable-next-line no-console
-          console.error(err);
-          reject(err);
+      fetch(
+        `${GITHUB_API_URL}/repos/${username}/${repoName}/traffic/views?per=week`,
+        {
+          headers: {
+            Accept: 'application/vnd.github.v3+json',
+            Authorization: 'Basic ' + base64.encode(username + ':' + token),
+          },
         }
-        resolve({ ...results, name: repo });
-      });
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          resolve({
+            name: repoName,
+            data,
+          });
+        })
+        .catch((err) => reject(err));
     });
 
   // eslint-disable-next-line no-undef
   return fetch(
     `${GITHUB_API_URL}/users/${username}/repos?per_page=${REPOS_PER_PAGE}&page=${DEFAULT_PAGE}`
   )
-    .then(res => res.json())
-    .then(repos => {
+    .then((res) => res.json())
+    .then((repos) => {
       const repoNames = repos
-        .filter(repo => !repo.fork)
-        .map(repo => `${username}/${repo.name}`);
+        .filter((repo) => !repo.fork)
+        .map((repo) => repo.name);
 
       return Promise.all(
-        repoNames.map(name => fetchGithubTrafficViews(name, { ...options }))
+        repoNames.map((name) => fetchGithubTrafficViews(username, name))
       );
     });
 };

@@ -1,32 +1,10 @@
 {
   "name": "github-traffic-website",
   "description": "Website to show traffic graphs for own repositories",
-  "author": "Michael Hoffmann <kontakt@mokkapps.de>",
-  "dependencies": {
-    "@netlify/plugin-lighthouse": "^1.4.2",
-    "@react-md/icon": "^2.4.2",
-    "@react-md/layout": "^2.4.2",
-    "@react-md/link": "^2.4.2",
-    "@react-md/material-icons": "^2.4.2",
-    "@react-md/utils": "^2.4.2",
-    "chart.js": "^2.9.4",
-    "firebase": "^8.0.0",
-    "gatsby": "^2.24.91",
-    "gatsby-plugin-manifest": "^2.4.37",
-    "gatsby-plugin-netlify": "^2.3.25",
-    "gatsby-plugin-netlify-cache": "^1.2.0",
-    "gatsby-plugin-offline": "^3.2.38",
-    "gatsby-plugin-preload-fonts": "^1.2.29",
-    "gatsby-plugin-react-helmet": "^3.3.14",
-    "gatsby-plugin-sass": "^2.3.22",
-    "github-traffic": "^0.1.2",
-    "node-sass": "^4.14.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.14.0",
-    "react-chartkick": "^0.4.1",
-    "react-dom": "^16.14.0",
-    "react-helmet": "^6.1.0",
-    "react-md": "^2.4.2"
+  "author": "Michael Hoffmann <mail@mokkapps.de>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mokkapps/github-traffic-viewer-website"
   },
   "keywords": [
     "gatsby"
@@ -39,19 +17,44 @@
     "format": "prettier --write '**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^7.12.1",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.21.5",
-    "gatsby-plugin-eslint": "^2.0.8",
-    "prettier": "^2.1.2"
+  "dependencies": {
+    "@netlify/plugin-lighthouse": "^2.1.2",
+    "@react-md/icon": "^4.0.3",
+    "@react-md/layout": "^4.0.3",
+    "@react-md/link": "^4.0.3",
+    "@react-md/material-icons": "^4.0.3",
+    "@react-md/utils": "^4.0.3",
+    "base-64": "^1.0.0",
+    "chart.js": "^3.7.0",
+    "firebase": "^9.6.2",
+    "gatsby": "^4.5.2",
+    "gatsby-plugin-firebase": "^0.2.0-beta.4",
+    "gatsby-plugin-manifest": "^4.5.1",
+    "gatsby-plugin-offline": "^5.5.1",
+    "gatsby-plugin-preload-fonts": "^3.5.1",
+    "gatsby-plugin-react-helmet": "^5.5.0",
+    "gatsby-plugin-sass": "^5.5.0",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-chartkick": "^0.5.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-md": "^4.0.3",
+    "sass": "^1.48.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Mokkapps/github-traffic-viewer-website"
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
+    "@netlify/plugin-gatsby": "^2.0.0-beta",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "gatsby-plugin-eslint": "^4.0.2",
+    "gatsby-plugin-netlify": "^4.0.0-next.0",
+    "prettier": "^2.5.1"
   }
 }

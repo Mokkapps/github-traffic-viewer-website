@@ -1,18 +1,20 @@
 {
-  "extends": "airbnb",
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es6": true
   },
-  "parser": "babel-eslint",
-  "rules": {
-    "arrow-parens": 0,
-    "implicit-arrow-linebreak": 0,
-    "comma-dangle": 0,
-    "no-nested-ternary": 0,
-    "react/forbid-prop-types": 0,
-    "react/require-default-props": 0
+  "parserOptions": {
+    "sourceType": "module",
+    "requireConfigFile": false
   },
+  "extends": [
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "eslint:recommended"
+  ],
+  "plugins": ["jsx-a11y"],
   "settings": {
     "react": {
       "version": "detect"

@@ -2,7 +2,7 @@ import React from 'react';
 
 import './styles.scss';
 
-export default () => (
+const Footer = () => (
   <footer className="footer-container">
     <div className="footer-content">
       <a href="https://github.com/Mokkapps/github-traffic-viewer-website">
@@ -19,3 +19,5 @@ export default () => (
     </div>
   </footer>
 );
+
+export default Footer;

@@ -1,61 +1,63 @@
 import React from 'react';
-import ReactChartkick, { LineChart } from 'react-chartkick';
-import Chart from 'chart.js';
+import 'chartkick/chart.js';
+import { LineChart } from 'react-chartkick';
 import PropTypes from 'prop-types';
 
 import ContentCard from '../ContentCard';
 import './styles.scss';
 
-ReactChartkick.addAdapter(Chart);
+const TrafficGraphs = ({ graphData }) => {
+  const mapToGraph = (data) => {
+    const countsData = {};
+    const uniquesData = {};
 
-const mapToGraph = (data) => {
-  const countsData = {};
-  const uniquesData = {};
+    for (const view of data) {
+      const { timestamp, count, uniques } = view;
+      countsData[timestamp] = count;
+      uniquesData[timestamp] = uniques;
+    }
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const view of data) {
-    const { timestamp, count, uniques } = view;
-    countsData[timestamp] = count;
-    uniquesData[timestamp] = uniques;
-  }
+    return [
+      { name: 'Views', data: countsData },
+      { name: 'Unique visitors', data: uniquesData },
+    ];
+  };
 
-  return [
-    { name: 'Views', data: countsData },
-    { name: 'Unique visitors', data: uniquesData },
-  ];
+  return (
+    <div>
+      {graphData.map(({ name, data: { views, count, uniques } }) => (
+        <details key={name} style={{ marginBottom: 25 }}>
+          <summary>{name}</summary>
+          <ContentCard>
+            <h2 className="repo-name">{name}</h2>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '50% 50%',
+                marginBottom: '2rem',
+              }}
+            >
+              <div className="view-container">
+                <strong className="view-number">{count}</strong>
+                <span className="view-text">views</span>
+              </div>
+              <div className="view-container">
+                <strong className="view-number">{uniques}</strong>
+                <span className="view-text">unique visitors</span>
+              </div>
+            </div>
+            <LineChart
+              colors={['#FC1A20', '#333333']}
+              curve={false}
+              legend="bottom"
+              data={mapToGraph(views)}
+            />
+          </ContentCard>
+        </details>
+      ))}
+    </div>
+  );
 };
-
-const TrafficGraphs = ({ graphData }) => (
-  <div>
-    {graphData.map((data) => (
-      <ContentCard key={data.name} style={{ marginBottom: 25 }}>
-        <h2 className="repo-name">{data.name}</h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '50% 50%',
-            marginBottom: '2rem',
-          }}
-        >
-          <div className="view-container">
-            <strong className="view-number">{data.count}</strong>
-            <span className="view-text">views</span>
-          </div>
-          <div className="view-container">
-            <strong className="view-number">{data.uniques}</strong>
-            <span className="view-text">unique visitors</span>
-          </div>
-        </div>
-        <LineChart
-          colors={['#FC1A20', '#333333']}
-          curve={false}
-          legend="bottom"
-          data={mapToGraph(data.views)}
-        />
-      </ContentCard>
-    ))}
-  </div>
-);
 
 TrafficGraphs.propTypes = {
   graphData: PropTypes.node.isRequired,

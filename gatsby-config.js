@@ -18,7 +18,6 @@ module.exports = {
     },
     'gatsby-plugin-netlify',
     'gatsby-plugin-preload-fonts',
-    'gatsby-plugin-netlify-cache',
     'gatsby-plugin-offline',
     'gatsby-plugin-sass',
     'gatsby-plugin-eslint',

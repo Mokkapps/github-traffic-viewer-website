@@ -40,7 +40,7 @@ publish = "public"
   status = 301
 
 [[plugins]]
-package = "netlify-plugin-gatsby-cache"
+package = "@netlify/plugin-gatsby"
 
 [[plugins]]
 package = "@netlify/plugin-lighthouse"

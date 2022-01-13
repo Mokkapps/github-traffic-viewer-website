@@ -11,6 +11,22 @@ body {
   margin: 0;
 }
 
+div .mobile-fix {
+  @media (max-width: 360px - 1px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+a {
+  color: $rmd-deep-orange-a-400;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .layout-container {
   display: flex;
   min-height: 100vh;
@@ -22,9 +38,3 @@ body {
   padding: 2rem;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700|Material+Icons');
-
-@import './variables';
-@import '~react-md/dist/react-md';
-
-@include react-md-utils;
