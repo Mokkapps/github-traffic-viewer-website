@@ -1,47 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress } from 'react-md';
+import React, { useState } from 'react';
+import { CircularProgress } from 'react-md';
 
 import Layout from '../layouts/layout';
 import TrafficGraphs from '../components/TrafficGraphs';
 import ContentCard from '../components/ContentCard';
 import ErrorCard from '../components/ErrorCard';
 import SignIn from '../components/SignIn';
-import {
-  getFirebaseRedirectResult,
-  firebaseSignIn,
-  firebaseSignOut,
-} from '../firebase';
+import { firebaseSignIn, firebaseSignOut } from '../firebase';
+import fetchRepoTraffic from '../trafficFetcher';
 
 const IndexPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [graphData, setGraphData] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const onSignIn = async () => {
+    try {
+      setIsLoading(true);
 
-    getFirebaseRedirectResult()
-      .then((result) => {
-        if (result) {
-          const { graphData } = result;
-          setGraphData(graphData);
-        }
-      })
-      .catch((error) => {
-        console.error('signInWithRedirect error', error);
+      const data = await firebaseSignIn();
+
+      if (!data) {
         setGraphData(null);
-        setError(`Error authenticating at GitHub: '${JSON.stringify(error)}'`);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
+        setIsLoading(false);
+        return;
+      }
 
-  const onSignIn = () => {
-    firebaseSignIn();
+      setIsSignedIn(true);
+      const { username, token } = data;
+
+      fetchRepoTraffic(username, token)
+        .then((trafficData) => {
+          console.log({ trafficData });
+          setGraphData(trafficData);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setGraphData(null);
+          setError(`Failed to load GitHub traffic: '${JSON.stringify(error)}'`);
+        })
+        .finally(() => setIsLoading(false));
+    } catch (error) {
+      console.error('signIn error', error);
+      setGraphData(null);
+      setError(`Error signing into GitHub: '${JSON.stringify(error)}'`);
+      setIsLoading(false);
+    }
   };
 
   const onSignOut = () => {
     firebaseSignOut()
       .then(() => {
+        setIsSignedIn(true);
+
         setGraphData(null);
         setError(null);
         setIsLoading(false);
@@ -55,7 +67,7 @@ const IndexPage = () => {
   };
 
   return (
-    <Layout>
+    <Layout signedIn={isSignedIn} onSignOut={onSignOut}>
       {error ? <ErrorCard>{error}</ErrorCard> : null}
       {isLoading ? (
         <ContentCard>
@@ -64,14 +76,6 @@ const IndexPage = () => {
         </ContentCard>
       ) : graphData ? (
         <div style={{ textAlign: 'center' }}>
-          <Button
-            theme="secondary"
-            themeType="contained"
-            style={{ width: '100%', height: 50, marginBottom: 25 }}
-            onClick={onSignOut}
-          >
-            Sign out
-          </Button>
           <TrafficGraphs graphData={graphData} />
         </div>
       ) : (

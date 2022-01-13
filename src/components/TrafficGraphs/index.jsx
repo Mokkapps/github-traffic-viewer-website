@@ -1,12 +1,20 @@
 import React from 'react';
-import 'chartkick/chart.js';
-import { LineChart } from 'react-chartkick';
 import PropTypes from 'prop-types';
+import { LineChart } from 'react-chartkick';
+import { ExpansionList, ExpansionPanel } from '@react-md/expansion-panel';
+import { usePanels } from 'react-md';
 
-import ContentCard from '../ContentCard';
+import 'chartkick/chart.js';
 import './styles.scss';
+import ContentCard from '../ContentCard';
 
 const TrafficGraphs = ({ graphData }) => {
+  const [panels] = usePanels({
+    idPrefix: 'simple-panels',
+    count: graphData.length,
+    defaultExpandedIndex: 0,
+  });
+
   const mapToGraph = (data) => {
     const countsData = {};
     const uniquesData = {};
@@ -24,10 +32,14 @@ const TrafficGraphs = ({ graphData }) => {
   };
 
   return (
-    <div>
-      {graphData.map(({ name, data: { views, count, uniques } }) => (
-        <details key={name} style={{ marginBottom: 25 }}>
-          <summary>{name}</summary>
+    <ExpansionList>
+      {graphData.map(({ name, data: { views, count, uniques } }, index) => (
+        <ExpansionPanel
+          {...panels[index]}
+          header={name}
+          key={name}
+          style={{ marginBottom: 25 }}
+        >
           <ContentCard>
             <h2 className="repo-name">{name}</h2>
             <div
@@ -53,9 +65,9 @@ const TrafficGraphs = ({ graphData }) => {
               data={mapToGraph(views)}
             />
           </ContentCard>
-        </details>
+        </ExpansionPanel>
       ))}
-    </div>
+    </ExpansionList>
   );
 };
 

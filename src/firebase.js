@@ -1,43 +1,34 @@
 import {
   getAuth,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signOut,
   GithubAuthProvider,
 } from 'firebase/auth';
-
-import fetchRepoTraffic from './trafficFetcher';
 
 const auth = getAuth();
 const provider = new GithubAuthProvider();
 provider.addScope('repo');
 
-export const firebaseSignIn = () => signInWithRedirect(auth, provider);
-
-export const firebaseSignOut = async () => signOut();
-
-export const getFirebaseRedirectResult = async () =>
-  new Promise((resolve, reject) => {
-    getRedirectResult(auth)
+export const firebaseSignIn = () => {
+  return new Promise((resolve, reject) => {
+    signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
 
         if (!credential) {
-          resolve();
+          resolve(null);
         }
 
         if (credential) {
           const token = credential.accessToken;
           const user = result.user;
-
           const username = user.reloadUserInfo.screenName;
 
-          fetchRepoTraffic(username, token)
-            .then((trafficData) => {
-              resolve({ graphData: trafficData, username });
-            })
-            .catch((error) => reject(error));
+          resolve({ username, token });
         }
       })
       .catch((error) => reject(error));
   });
+};
+
+export const firebaseSignOut = () => signOut(auth);

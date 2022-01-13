@@ -7,7 +7,7 @@ import { Configuration } from '@react-md/layout';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const Layout = ({ children }) => (
+const Layout = ({ children, signedIn, onSignOut }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -42,7 +42,11 @@ const Layout = ({ children }) => (
         </Helmet>
         <Configuration>
           <div className="layout-container">
-            <Header siteTitle={data.site.siteMetadata.title} />
+            <Header
+              signedIn={signedIn}
+              onSignOut={() => onSignOut()}
+              siteTitle={data.site.siteMetadata.title}
+            />
             <div className="layout-content">{children}</div>
             <Footer />
           </div>
@@ -54,6 +58,8 @@ const Layout = ({ children }) => (
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  signedIn: PropTypes.bool,
+  onSignOut: PropTypes.func,
 };
 
 export default Layout;
