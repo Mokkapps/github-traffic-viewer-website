@@ -32,7 +32,6 @@ const IndexPage = () => {
 
       fetchRepoTraffic(username, token)
         .then((trafficData) => {
-          console.log({ trafficData });
           setGraphData(trafficData);
           setIsLoading(false);
         })
