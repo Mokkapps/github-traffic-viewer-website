@@ -11,6 +11,12 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['./types/**'],
   },
+  routeRules: {
+    '/': { prerender: true },
+    '/traffic-data': { ssr: false },
+    '/login': { ssr: false },
+    '/privacy-policy': { prerender: true },
+  },
   supabase: {
     redirect: false,
   },
