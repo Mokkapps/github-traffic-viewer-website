@@ -6,7 +6,7 @@ interface Props {
 defineProps<Props>()
 
 type Emits = {
-  select: [string]
+  select: [number]
 }
 defineEmits<Emits>()
 

@@ -10,7 +10,7 @@ export const useAuth = () => {
       provider: 'github',
       options: {
         redirectTo: '/traffic-data',
-        scopes: 'repo',
+        scopes: 'repo metadata:read administration:read',
       },
     })
   }

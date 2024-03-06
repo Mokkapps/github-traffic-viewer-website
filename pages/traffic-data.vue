@@ -45,8 +45,6 @@ const filteredRepositoriesData = computed(() => {
   })
 })
 
-console.log({ githubAccessToken, githubUserName })
-
 const {
   data: reposData,
   error: reposError,
@@ -68,6 +66,7 @@ const {
       Authorization: `Bearer ${githubAccessToken.value}`,
     }
 
+    // https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-the-authenticated-user
     const repos = await $fetch<Array<GithubRepositoryDTO>>(
       `https://api.github.com/user/repos?per_page=${REPOS_PER_PAGE}&page=${githubApiRepositoriesPage.value}`,
       { headers },
@@ -82,6 +81,7 @@ const {
 
     return Promise.all(
       mappedRepos.map(async (mappedRepo) => {
+        // https://docs.github.com/en/rest/metrics/traffic?apiVersion=2022-11-28#get-page-views
         const trafficData = await $fetch<TrafficData>(
           `https://api.github.com/repos/${githubUserName.value}/${mappedRepo.name}/traffic/views?per=${trafficTimeFrame.value}`,
           {
@@ -162,7 +162,7 @@ watch(
     router.push({
       query: {
         ...route.query,
-        trafficTimeFrame: newTrafficTimeFrame ? 'true' : undefined,
+        trafficTimeFrame: newTrafficTimeFrame,
       },
     })
   },
@@ -216,15 +216,15 @@ definePageMeta({
           </template>
           <USkeleton class="h-4 w-[200px]" />
         </UCard>
-        <UCard v-else-if="reposError" class="mt-10">
-          <template #header>
-            <div class="flex items-center gap-2">
-              <UIcon name="i-heroicons-exclamation-circle" color="danger" />
-              <h2 class="text-danger">Error</h2>
-            </div>
-          </template>
-          <p>{{ reposError.message }}</p>
-        </UCard>
+        <UAlert
+          v-else-if="reposError"
+          class="mt-10"
+          icon="i-heroicons-exclamation-circle"
+          color="red"
+          variant="outline"
+          title="An error occurred"
+          :description="reposError.message"
+        />
       </div>
     </div>
   </UPageBody>

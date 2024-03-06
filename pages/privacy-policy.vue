@@ -1,24 +1,16 @@
 <template>
   <UPageBody prose>
-    <UPageHeader
-      title="Privacy Policy"
-      description="Login to your GitHub account to be able to view your traffic data."
-    />
+    <UPageHeader title="Privacy Policy" description="Effective date: November 11, 2018" />
     <div class="flex flex-col">
-      <h1>Privacy Policy</h1>
-
-      <p>Effective date: November 11, 2018</p>
-
-      <p>
-        GitHub Traffic Viewer ("us", "we", or "our") operates the https://github-traffic-viewer.netlify.com/ website
-        (the "Service").
-      </p>
+      <p>GitHub Traffic Viewer ("us", "we", or "our") operates this website (the "Service").</p>
 
       <p>
         This page informs you of our policies regarding the collection, use, and disclosure of personal data when you
         use our Service and the choices you have associated with that data. Our Privacy Policy for GitHub Traffic Viewer
         is managed through{' '}
-        <a href="https://www.freeprivacypolicy.com/free-privacy-policy-generator.php"> Free Privacy Policy </a>
+        <NuxtLink external href="https://www.freeprivacypolicy.com/free-privacy-policy-generator.php">
+          Free Privacy Policy
+        </NuxtLink>
         .
       </p>
 
@@ -26,7 +18,9 @@
         We use your data to provide and improve the Service. By using the Service, you agree to the collection and use
         of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in
         this Privacy Policy have the same meanings as in our Terms and Conditions, accessible from
-        https://github-traffic-viewer.netlify.com/
+        <NuxtLink external href="https://github-traffic-viewer.netlify.com/">
+          https://github-traffic-viewer.netlify.com/
+        </NuxtLink>
       </p>
 
       <h2>Information Collection And Use</h2>
