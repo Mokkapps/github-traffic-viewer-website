@@ -10,7 +10,7 @@
 
       <template #default>
         <img
-          src="https://mokkapps.twic.pics/github-traffic-viewer/hero.png?twic=v1/cover=1024"
+          src="https://mokkapps.twic.pics/github-traffic-viewer/hero-v2.png?twic=v1/cover=1024"
           class="w-full rounded-md shadow-xl ring-1 ring-gray-300 dark:ring-gray-700 p-4"
         />
       </template>
