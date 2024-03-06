@@ -29,10 +29,12 @@ const onAuthButtonClick = async () => {
 
 <template>
   <UHeader :links="links">
-    <template #logo><span class="text-sm md:text-xl">GitHub Traffic Viewer</span></template>
+    <template #logo>
+      <span class="text-sm md:text-xl">GitHub Traffic Viewer</span>
+    </template>
 
     <template #right>
-      <UButton @click="onAuthButtonClick" color="gray" size="md" :ui="{ rounded: 'rounded-full' }">
+      <UButton color="gray" size="md" :ui="{ rounded: 'rounded-full' }" @click="onAuthButtonClick">
         {{ authButtonText }}
       </UButton>
 

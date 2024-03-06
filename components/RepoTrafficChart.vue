@@ -53,10 +53,7 @@ const lineChartData = computed(() => {
 </script>
 
 <template>
-  <UCard>
-    <template #header>
-      <h2 class="text-2xl font-bold">{{ props.repository.name }}</h2>
-    </template>
-    <Line :data="lineChartData" :options="lineOptions" class="rounded-md p-4" />
-  </UCard>
+  <UDashboardCard :title="repository.name">
+    <Line :data="lineChartData" :options="lineOptions" />
+  </UDashboardCard>
 </template>

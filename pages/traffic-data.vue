@@ -3,14 +3,26 @@ const { githubAccessToken, githubUserName } = useAuth()
 const route = useRoute()
 const router = useRouter()
 
-const REPOS_PER_PAGE = 100
-
-const githubApiRepositoriesPage = ref(1)
 const showForkedRepos = ref(false)
 const showPrivateRepos = ref(false)
 const trafficTimeFrame = ref<'day' | 'week'>('week')
 const selectedRepositoryId = ref<number | null>(null)
 const searchRepositoryName = ref('')
+
+const links = [
+  {
+    id: 'home',
+    label: 'Home',
+    icon: 'i-heroicons-home',
+    to: '/',
+    tooltip: {
+      text: 'Home',
+      shortcuts: ['G', 'H'],
+    },
+  },
+]
+
+const headerText = computed(() => `Traffic data for your GitHub user "${githubUserName.value}"`)
 
 const selectedRepositoryData = computed(() => {
   if (!filteredRepositoriesData.value) {
@@ -66,11 +78,31 @@ const {
       Authorization: `Bearer ${githubAccessToken.value}`,
     }
 
+    const REPOS_PER_PAGE = 100
+    const NEXT_PATTERN = /(?<=<)([\S]*)(?=>; rel="Next")/i
+    let pagesRemaining = true
+    let repos: Array<GithubRepositoryDTO> = []
+
     // https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-the-authenticated-user
-    const repos = await $fetch<Array<GithubRepositoryDTO>>(
-      `https://api.github.com/user/repos?per_page=${REPOS_PER_PAGE}&page=${githubApiRepositoriesPage.value}`,
-      { headers },
-    )
+    let url = `https://api.github.com/user/repos?per_page=${REPOS_PER_PAGE}&page=1`
+
+    while (pagesRemaining) {
+      console.log('fetching repos', url)
+      const reposResponse = await $fetch.raw(url, { headers })
+
+      repos = [...repos, ...(reposResponse._data as Array<GithubRepositoryDTO>)]
+
+      const linkHeader = reposResponse.headers.get('link')
+
+      pagesRemaining = linkHeader && linkHeader.includes('rel="next"')
+
+      if (pagesRemaining) {
+        url = linkHeader.match(NEXT_PATTERN)[0]
+      }
+    }
+
+    console.log(repos)
+    // console.log('link header', reposResponse.headers.get('link'))
 
     const mappedRepos: Array<Pick<RepositoryViewModel, 'id' | 'isFork' | 'isPrivate' | 'name'>> = repos.map((repo) => ({
       name: repo.name,
@@ -79,7 +111,7 @@ const {
       id: repo.id,
     }))
 
-    return Promise.all(
+    const results = await Promise.allSettled(
       mappedRepos.map(async (mappedRepo) => {
         // https://docs.github.com/en/rest/metrics/traffic?apiVersion=2022-11-28#get-page-views
         const trafficData = await $fetch<TrafficData>(
@@ -94,8 +126,12 @@ const {
         }
       }),
     )
+
+    return results
+      .filter((result) => result.status === 'fulfilled')
+      .map((result) => result.value as GithubRepositoryDTO)
   },
-  { watch: [githubUserName, githubApiRepositoriesPage, githubAccessToken, trafficTimeFrame] },
+  { watch: [githubUserName, githubAccessToken, trafficTimeFrame] },
 )
 
 watch(reposData, () => {
@@ -188,44 +224,84 @@ onBeforeMount(() => {
 })
 
 definePageMeta({
+  layout: 'dashboard',
   middleware: ['auth'],
 })
 </script>
 
 <template>
-  <UPageBody>
-    <UPageHeader
-      title="Your GitHub Traffic Data"
-      description="A list of all your GitHub repositories and their traffic data."
-    />
-    <div class="grid grid-cols-12">
-      <TrafficDataSidebar
-        v-model:show-forked-repos="showForkedRepos"
-        v-model:show-private-repos="showPrivateRepos"
-        v-model:name="searchRepositoryName"
-        v-model:traffic-time-frame="trafficTimeFrame"
-        :is-loading-traffic-data="isLoadingTrafficData"
-        :repositories="filteredRepositoriesData"
-        @select="selectedRepositoryId = $event"
-      />
-      <div class="col-span-9 p-8">
-        <RepoTrafficChart v-if="selectedRepositoryData" :repository="selectedRepositoryData" />
-        <UCard v-else-if="isLoadingTrafficData" class="mt-10">
-          <template #header>
-            <USkeleton class="h-4 w-[250px]" />
-          </template>
-          <USkeleton class="h-4 w-[200px]" />
-        </UCard>
-        <UAlert
-          v-else-if="reposError"
-          class="mt-10"
-          icon="i-heroicons-exclamation-circle"
-          color="red"
-          variant="outline"
-          title="An error occurred"
-          :description="reposError.message"
+  <UDashboardLayout>
+    <UDashboardPanel :width="350" :resizable="{ min: 300, max: 600 }" collapsible>
+      <UDashboardSidebar>
+        <template #header>
+          <span class="text-lg font-bold p-2.5">GitHub Traffic Viewer</span>
+        </template>
+
+        <UDashboardSidebarLinks :links="links" />
+
+        <UDivider />
+
+        <TrafficDataSidebar
+          v-model:show-forked-repos="showForkedRepos"
+          v-model:show-private-repos="showPrivateRepos"
+          v-model:name="searchRepositoryName"
+          v-model:traffic-time-frame="trafficTimeFrame"
+          :is-loading-traffic-data="isLoadingTrafficData"
+          :repositories="filteredRepositoriesData"
+          @select="selectedRepositoryId = $event"
         />
-      </div>
-    </div>
-  </UPageBody>
+
+        <div class="flex-1" />
+      </UDashboardSidebar>
+    </UDashboardPanel>
+
+    <UDashboardPage>
+      <UDashboardPanel grow>
+        <UDashboardNavbar :title="headerText">
+          <TrafficDataSidebar
+            v-model:show-forked-repos="showForkedRepos"
+            v-model:show-private-repos="showPrivateRepos"
+            v-model:name="searchRepositoryName"
+            v-model:traffic-time-frame="trafficTimeFrame"
+            :is-loading-traffic-data="isLoadingTrafficData"
+            :repositories="filteredRepositoriesData"
+            @select="selectedRepositoryId = $event"
+          />
+          <template #right>
+            <UColorModeButton />
+
+            <UButton
+              to="https://github.com/Mokkapps/github-traffic-viewer-website"
+              target="_blank"
+              icon="i-simple-icons-github"
+              aria-label="GitHub"
+              color="gray"
+              variant="ghost"
+            />
+          </template>
+        </UDashboardNavbar>
+
+        <UDashboardPanelContent>
+          <div class="col-span-9 p-8">
+            <RepoTrafficChart v-if="selectedRepositoryData" :repository="selectedRepositoryData" />
+            <UCard v-else-if="isLoadingTrafficData" class="mt-10">
+              <template #header>
+                <USkeleton class="h-4 w-[250px]" />
+              </template>
+              <USkeleton class="h-4 w-[200px]" />
+            </UCard>
+            <UAlert
+              v-else-if="reposError"
+              class="mt-10"
+              icon="i-heroicons-exclamation-circle"
+              color="red"
+              variant="outline"
+              title="An error occurred"
+              :description="reposError.message"
+            />
+          </div>
+        </UDashboardPanelContent>
+      </UDashboardPanel>
+    </UDashboardPage>
+  </UDashboardLayout>
 </template>
