@@ -12,22 +12,16 @@ const {
   selectedRepositoryId,
 } = useTrafficData()
 
-const links = [
-  {
-    id: 'home',
-    label: 'Home',
-    icon: 'i-heroicons-home',
-    to: '/',
-    tooltip: {
-      text: 'Home',
-      shortcuts: ['G', 'H'],
-    },
-  },
-]
-
 definePageMeta({
   layout: 'dashboard',
   middleware: ['auth'],
+})
+
+defineOgImageComponent('NuxtSeo', {
+  title: 'GitHub Traffic Viewer',
+  description: 'Instant analytics for views of your repositories empowering you to optimize them effortlessly.',
+  theme: '#0F172A',
+  colorMode: 'dark',
 })
 </script>
 
@@ -36,10 +30,8 @@ definePageMeta({
     <UDashboardPanel :width="350" :resizable="{ min: 300, max: 600 }" collapsible>
       <UDashboardSidebar>
         <template #header>
-          <span class="text-lg font-bold p-2.5">GitHub Traffic Viewer</span>
+          <NuxtLink to="/" class="text-lg font-bold py-2.5">GitHub Traffic Viewer</NuxtLink>
         </template>
-
-        <UDashboardSidebarLinks :links="links" />
 
         <UDivider />
 

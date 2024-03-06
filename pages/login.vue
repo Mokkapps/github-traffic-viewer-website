@@ -1,5 +1,12 @@
 <script setup lang="ts">
 const { login } = useAuth()
+
+defineOgImageComponent('NuxtSeo', {
+  title: 'GitHub Traffic Viewer',
+  description: 'Instant analytics for views of your repositories empowering you to optimize them effortlessly.',
+  theme: '#0F172A',
+  colorMode: 'dark',
+})
 </script>
 
 <template>
