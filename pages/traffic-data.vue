@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import siteMetadata from '~/sitemetadata'
+import siteMetadata from '~/siteMetadata'
 
 const {
   showForkedRepos,

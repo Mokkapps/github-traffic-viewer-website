@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import siteMetadata from '~/sitemetadata'
+import siteMetadata from '~/siteMetadata'
 
 const { login } = useAuth()
 
