@@ -51,16 +51,9 @@ defineOgImageComponent('NuxtSeo', {
       <UDashboardPanel grow>
         <UDashboardNavbar :title="headerText">
           <template #right>
+            <AuthButton />
             <UColorModeButton />
-
-            <UButton
-              to="https://github.com/Mokkapps/github-traffic-viewer-website"
-              target="_blank"
-              icon="i-simple-icons-github"
-              aria-label="GitHub"
-              color="gray"
-              variant="ghost"
-            />
+            <RepoButton />
           </template>
         </UDashboardNavbar>
 
@@ -77,7 +70,6 @@ defineOgImageComponent('NuxtSeo', {
             <RepoTrafficChart v-else-if="selectedRepositoryData" :repository="selectedRepositoryData" />
             <UAlert
               v-else-if="error"
-              class="mt-10"
               icon="i-heroicons-exclamation-circle"
               color="red"
               variant="outline"

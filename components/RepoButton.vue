@@ -1,0 +1,10 @@
+<template>
+  <UButton
+    to="https://github.com/Mokkapps/github-traffic-viewer-website"
+    target="_blank"
+    icon="i-simple-icons-github"
+    aria-label="GitHub"
+    color="gray"
+    variant="ghost"
+  />
+</template>

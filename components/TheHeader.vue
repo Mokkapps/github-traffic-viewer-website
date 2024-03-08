@@ -1,7 +1,4 @@
 <script setup lang="ts">
-const { logout, showAuthModal } = useAuth()
-const user = useSupabaseUser()
-
 const links = [
   {
     label: 'Traffic Data',
@@ -9,22 +6,6 @@ const links = [
     to: '/traffic-data',
   },
 ]
-
-const authButtonText = computed(() => {
-  if (user.value) {
-    return 'Logout'
-  }
-
-  return 'Login'
-})
-
-const onAuthButtonClick = async () => {
-  if (user.value) {
-    await logout()
-  } else {
-    showAuthModal.value = true
-  }
-}
 </script>
 
 <template>
@@ -34,20 +15,9 @@ const onAuthButtonClick = async () => {
     </template>
 
     <template #right>
-      <UButton color="gray" size="md" :ui="{ rounded: 'rounded-full' }" @click="onAuthButtonClick">
-        {{ authButtonText }}
-      </UButton>
-
+      <AuthButton />
       <UColorModeButton />
-
-      <UButton
-        to="https://github.com/Mokkapps/github-traffic-viewer-website"
-        target="_blank"
-        icon="i-simple-icons-github"
-        aria-label="GitHub"
-        color="gray"
-        variant="ghost"
-      />
+      <RepoButton />
     </template>
   </UHeader>
 </template>
