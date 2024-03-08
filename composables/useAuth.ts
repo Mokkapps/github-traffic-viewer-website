@@ -30,8 +30,12 @@ export const useAuth = () => {
   }
 
   supabase.auth.onAuthStateChange((authState, session) => {
-    githubAccessToken.value = session?.provider_token ?? ''
-    githubUserName.value = session?.user?.user_metadata?.user_name ?? ''
+    if (session?.provider_token) {
+      githubAccessToken.value = session.provider_token
+    }
+    if (session?.user?.user_metadata?.user_name) {
+      githubUserName.value = session.user.user_metadata.user_name
+    }
   })
 
   return {
