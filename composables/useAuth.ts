@@ -29,12 +29,6 @@ export const useAuth = () => {
     await navigateTo('/')
   }
 
-  const refresh = async () => {
-    const session = await supabase.auth.refreshSession()
-    githubAccessToken.value = session.data?.session?.provider_token ?? ''
-    githubUserName.value = session.data?.user?.user_metadata?.user_name ?? ''
-  }
-
   supabase.auth.onAuthStateChange((authState, session) => {
     githubAccessToken.value = session?.provider_token ?? ''
     githubUserName.value = session?.user?.user_metadata?.user_name ?? ''
@@ -44,7 +38,6 @@ export const useAuth = () => {
     githubAccessToken,
     githubUserName,
     showAuthModal,
-    refresh,
     login,
     logout,
   }
