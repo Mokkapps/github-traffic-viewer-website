@@ -5,8 +5,8 @@ export default defineNuxtConfig({
   ui: {
     icons: ['heroicons', 'simple-icons'],
   },
-  devtools: {
-    enabled: true,
+  devServer: {
+    port: 4004,
   },
   imports: {
     dirs: ['./types/**'],

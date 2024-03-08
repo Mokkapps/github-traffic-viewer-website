@@ -1,5 +1,5 @@
 export const useTrafficData = () => {
-  const { githubAccessToken, githubUserName } = useAuth()
+  const { githubAccessToken, githubUserName, refresh } = useAuth()
   const route = useRoute()
   const router = useRouter()
 
@@ -17,7 +17,10 @@ export const useTrafficData = () => {
       }
 
       if (!githubAccessToken.value) {
-        throw new Error('No GitHub access token found. Please try to login again.')
+        await refresh()
+        if (!githubAccessToken.value) {
+          throw new Error('No GitHub access token found. Please try to login again.')
+        }
       }
 
       const headers = {
