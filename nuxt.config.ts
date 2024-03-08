@@ -1,3 +1,5 @@
+import siteMetadata from './siteMetadata'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
@@ -38,8 +40,8 @@ export default defineNuxtConfig({
   },
   site: {
     url: 'https://github-traffic-viewer.netlify.app',
-    name: 'GitHub Traffic Viewer',
-    description: 'Instant analytics for views of your repositories empowering you to optimize them effortlessly.',
+    name: siteMetadata.projectName,
+    description: siteMetadata.description,
     defaultLocale: 'en', // not needed if you have @nuxtjs/i18n installed
   },
 })

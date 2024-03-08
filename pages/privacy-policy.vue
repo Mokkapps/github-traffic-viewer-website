@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import siteMetadata from '~/sitemetadata'
+
 defineOgImageComponent('NuxtSeo', {
-  title: 'GitHub Traffic Viewer',
-  description: 'Instant analytics for views of your repositories empowering you to optimize them effortlessly.',
+  title: siteMetadata.projectName,
+  description: siteMetadata.description,
   theme: '#0F172A',
   colorMode: 'dark',
 })
@@ -208,3 +210,4 @@ defineOgImageComponent('NuxtSeo', {
     </div>
   </UPageBody>
 </template>
+~/siteMetadata

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import siteMetadata from '~/sitemetadata'
+
 defineOgImageComponent('NuxtSeo', {
-  title: 'GitHub Traffic Viewer',
-  description: 'Instant analytics for views of your repositories empowering you to optimize them effortlessly.',
+  title: siteMetadata.projectName,
+  description: siteMetadata.description,
   theme: '#0F172A',
   colorMode: 'dark',
 })
@@ -9,10 +11,7 @@ defineOgImageComponent('NuxtSeo', {
 
 <template>
   <div>
-    <ULandingHero
-      title="GitHub Traffic Viewer"
-      description="Instant analytics for views of your repositories empowering you to optimize them effortlessly."
-    >
+    <ULandingHero :title="siteMetadata.projectName" :description="siteMetadata.description">
       <template #links>
         <UButton to="/traffic-data" size="xl">Get started - It's free</UButton>
       </template>
@@ -26,3 +25,4 @@ defineOgImageComponent('NuxtSeo', {
     </ULandingHero>
   </div>
 </template>
+~/siteMetadata
