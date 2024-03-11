@@ -5,13 +5,13 @@ const {
   showForkedRepos,
   showPrivateRepos,
   searchRepositoryName,
-  headerText,
   selectedRepositoryData,
   repositories,
   trafficTimeFrame,
   isLoadingTrafficData,
   error,
   selectedRepositoryId,
+  githubUserName,
 } = useTrafficData()
 
 definePageMeta({
@@ -32,7 +32,7 @@ defineOgImageComponent('NuxtSeo', {
     <UDashboardPanel :width="350" :resizable="{ min: 300, max: 600 }" collapsible>
       <UDashboardSidebar>
         <template #header>
-          <NuxtLink to="/" class="text-lg font-bold py-2.5">GitHub Traffic Viewer</NuxtLink>
+          <NuxtLink to="/" class="text-lg font-bold py-2.5"> GitHub Traffic Viewer </NuxtLink>
         </template>
 
         <UDivider />
@@ -51,7 +51,12 @@ defineOgImageComponent('NuxtSeo', {
 
     <UDashboardPage>
       <UDashboardPanel grow>
-        <UDashboardNavbar :title="headerText">
+        <UDashboardNavbar>
+          <template #title>
+            <span
+              >Traffic data for your GitHub user <span class="italic font-bold">{{ githubUserName }}</span></span
+            >
+          </template>
           <template #right>
             <AuthButton />
             <UColorModeButton />
@@ -61,14 +66,14 @@ defineOgImageComponent('NuxtSeo', {
 
         <UDashboardPanelContent>
           <div class="col-span-9 p-8">
-            <UCard v-if="isLoadingTrafficData">
+            <UDashboardCard v-if="isLoadingTrafficData">
               <div class="flex flex-col gap-10">
                 <USkeleton class="h-6 w-[300px]" />
                 <div class="flex flex-col gap-8">
                   <USkeleton v-for="n of 13" :key="n" class="h-4 w-full" />
                 </div>
               </div>
-            </UCard>
+            </UDashboardCard>
             <RepoTrafficChart v-else-if="selectedRepositoryData" :repository="selectedRepositoryData" />
             <UAlert
               v-else-if="error"

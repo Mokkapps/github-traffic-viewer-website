@@ -83,8 +83,6 @@ export const useTrafficData = () => {
 
   const isLoadingTrafficData = computed(() => status.value === 'pending')
 
-  const headerText = computed(() => `Traffic data for your GitHub user "${githubUserName.value}"`)
-
   const selectedRepositoryData = computed(() => {
     if (!filteredRepositoriesData.value) {
       return undefined
@@ -211,12 +209,12 @@ export const useTrafficData = () => {
     showForkedRepos,
     showPrivateRepos,
     searchRepositoryName,
-    headerText,
     trafficTimeFrame,
     selectedRepositoryData,
     repositories: filteredRepositoriesData,
     isLoadingTrafficData,
     error,
     selectedRepositoryId,
+    githubUserName,
   }
 }
