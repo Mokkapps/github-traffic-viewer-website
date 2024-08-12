@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxtjs/seo'],
+  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxtjs/seo', '@nuxt/eslint'],
   app: {
     head: {
       noscript: [{ textContent: 'Javascript is required' }],
