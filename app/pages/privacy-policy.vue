@@ -29,8 +29,8 @@ defineOgImageComponent('NuxtSeo', {
         We use your data to provide and improve the Service. By using the Service, you agree to the collection and use
         of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in
         this Privacy Policy have the same meanings as in our Terms and Conditions, accessible from
-        <NuxtLink external href="https://github-traffic-viewer.netlify.com/">
-          https://github-traffic-viewer.netlify.com/
+        <NuxtLink external href="https://github-traffic-viewer.netlify.app/">
+          https://github-traffic-viewer.netlify.app/
         </NuxtLink>
       </p>
 

@@ -1,25 +1,14 @@
-import siteMetadata from './siteMetadata'
+import siteMetadata from './app/siteMetadata'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: ['@nuxt/ui-pro'],
-  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxtjs/seo'],
-  ui: {
-    icons: ['heroicons', 'simple-icons'],
+  extends: ['@nuxt/ui-pro', 'nuxt-umami'],
+  future: {
+    compatibilityVersion: 4,
   },
+  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxtjs/seo'],
   app: {
     head: {
-      script: [
-        {
-          src: 'https://analytics.mokkapps.de/mokkapps',
-          async: true,
-          defer: true,
-          'data-website-id': 'f1f9818c-4cc1-4b7d-b491-5af2fcd328e9',
-          'data-host-url': 'https://analytics.mokkapps.de',
-          'data-domains': 'github-traffic-viewer.netlify.app',
-          'data-do-not-track': true,
-        },
-      ],
       noscript: [{ textContent: 'Javascript is required' }],
     },
   },
