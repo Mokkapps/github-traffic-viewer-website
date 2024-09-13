@@ -1,8 +1,0 @@
-# explicit commands for building the site
-# and the folder to publish
-[build]
-command = "npm run generate"
-publish = "dist"
-  [build.environment]
-  # set TERM variable for terminal output
-  TERM = "xterm"

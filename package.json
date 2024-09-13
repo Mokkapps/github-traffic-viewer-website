@@ -39,6 +39,5 @@
     "vue": "3.5.4",
     "vue-chartjs": "^5.3.1",
     "vue-tsc": "^2.1.6"
-  },
-  "packageManager": "pnpm@8.6.5+sha512.9b3b5fbe7789978a3d80259f42514a8a8ea05588496c56b3594541728989f6eff2b29c127075313325afc4e79dd5ae78deba28f9a7888e9e554241cea1358502"
+  }
 }
