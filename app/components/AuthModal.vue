@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-const { showAuthModal, login } = useAuth()
+const { showAuthModal } = useAuth()
 </script>
 
 <template>
   <UModal v-model="showAuthModal">
-    <AuthContainer @login="login" />
+    <AuthContainer />
   </UModal>
 </template>

@@ -25,4 +25,3 @@ defineOgImageComponent('NuxtSeo', {
     </ULandingHero>
   </div>
 </template>
-~/siteMetadata

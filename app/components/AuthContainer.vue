@@ -9,7 +9,7 @@ defineEmits(['login'])
     <span class="text-gray-500 dark:text-gray-400"
       >Login to your GitHub account to be able to view your traffic data.</span
     >
-    <UButton icon="i-simple-icons-github" class="space-y-3" block size="xl" color="white" @click="$emit('login')">
+    <UButton icon="i-simple-icons-github" class="space-y-3" block size="xl" color="white" to="/auth/github" external>
       GitHub
     </UButton>
   </div>

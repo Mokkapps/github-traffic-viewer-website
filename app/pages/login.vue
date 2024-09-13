@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import siteMetadata from '~/siteMetadata'
 
-const { login } = useAuth()
-
 defineOgImageComponent('NuxtSeo', {
   title: siteMetadata.projectName,
   description: siteMetadata.description,
@@ -14,7 +12,7 @@ defineOgImageComponent('NuxtSeo', {
 <template>
   <UPageBody>
     <UPageHeader title="Login" description="Login to your GitHub account to be able to view your traffic data." />
-    <UButton icon="i-simple-icons-github" class="space-y-3" block size="xl" color="white" @click="login">
+    <UButton icon="i-simple-icons-github" class="space-y-3" block size="xl" color="white" to="/auth/github">
       GitHub
     </UButton>
   </UPageBody>

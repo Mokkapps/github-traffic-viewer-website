@@ -1,28 +1,19 @@
 <script lang="ts" setup>
-const { logout, showAuthModal } = useAuth()
-const user = useSupabaseUser()
-
-const authButtonText = computed(() => {
-  if (user.value) {
-    return 'Logout'
-  }
-
-  return 'Login'
-})
-
-const onAuthButtonClick = async () => {
-  if (user.value) {
-    await logout()
-  } else {
-    showAuthModal.value = true
-  }
-}
+const { showAuthModal } = useAuth()
 </script>
 
 <template>
-  <UButton color="gray" size="md" :ui="{ rounded: 'rounded-full' }" @click="onAuthButtonClick">
-    {{ authButtonText }}
-  </UButton>
+  <AuthState>
+    <template #default="{ loggedIn, clear }">
+      <UButton v-if="loggedIn" color="gray" size="md" :ui="{ rounded: 'rounded-full' }" @click="clear">
+        Logout
+      </UButton>
+      <UButton v-else color="gray" size="md" :ui="{ rounded: 'rounded-full' }" @click="showAuthModal = true">
+        Login</UButton
+      >
+    </template>
+    <template #placeholder>
+      <button disabled>Loading...</button>
+    </template>
+  </AuthState>
 </template>
-
-<style></style>

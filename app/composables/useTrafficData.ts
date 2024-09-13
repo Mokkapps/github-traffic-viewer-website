@@ -1,5 +1,8 @@
 export const useTrafficData = () => {
-  const { githubAccessToken, githubUserName } = useAuth()
+  const { session } = useUserSession()
+  const githubUserName = computed(() => session.value?.user?.githubUsername)
+  const githubAccessToken = computed(() => session.value?.user?.githubAccessToken)
+
   const route = useRoute()
   const router = useRouter()
 
@@ -35,7 +38,6 @@ export const useTrafficData = () => {
       let url = `https://api.github.com/user/repos?per_page=${REPOS_PER_PAGE}&page=1`
 
       while (pagesRemaining) {
-        console.log('fetching repos', url)
         const reposResponse = await $fetch.raw(url, { headers })
 
         repos = [...repos, ...(reposResponse._data as Array<GithubRepositoryDTO>)]
@@ -117,7 +119,7 @@ export const useTrafficData = () => {
   })
 
   watch(data, () => {
-    if (data.value && !selectedRepositoryId.value) {
+    if (data.value && data.value[0] && !selectedRepositoryId.value) {
       selectedRepositoryId.value = data.value[0].id
     }
   })
