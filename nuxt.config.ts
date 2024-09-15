@@ -42,7 +42,7 @@ export default defineNuxtConfig({
   },
 
   umami: {
-    domains: ['mokkapps.de'],
+    domains: ['github-traffic-viewer.netlify.app'],
     ignoreLocalhost: true,
     proxy: 'cloak',
   },
