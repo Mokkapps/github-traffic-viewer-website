@@ -44,5 +44,6 @@ export default defineNuxtConfig({
   umami: {
     ignoreLocalhost: true,
     proxy: 'cloak',
+    logErrors: true,
   },
 })
